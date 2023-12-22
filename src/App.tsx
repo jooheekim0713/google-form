@@ -1,8 +1,15 @@
 import React from 'react';
+import Form from './components/Form';
 import './App.css';
+import Navbar from './components/Navbar';
 
 function App() {
-  return <div className="App">App</div>;
+  return (
+    <>
+      <Navbar />
+      <Form />
+    </>
+  );
 }
 
 export default App;
