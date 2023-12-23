@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import NotFound from './pages/NotFound';
-import Home from './pages/Home';
 import ViewForm from './pages/ViewForm';
 import './index.css';
 import App from './App';
+import Form from './pages/Form';
 
 const router = createBrowserRouter([
   {
@@ -16,7 +16,7 @@ const router = createBrowserRouter([
       {
         index: true,
         path: '/',
-        element: <Home />,
+        element: <Form />,
       },
       {
         path: '/viewForm',

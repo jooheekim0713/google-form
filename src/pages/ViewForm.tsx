@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default function ViewForm() {
-  return <div>ViewForm</div>;
+  return <div className="flex flex-col items-center">ViewForm</div>;
 }
