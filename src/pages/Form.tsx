@@ -34,28 +34,32 @@ export default function Form() {
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <form onSubmit={handleSubmit}>
-        <input
-          className="block"
-          type="text"
-          name="title"
-          value={survey.title}
-          onChange={handleChange}
-          placeholder="제목 없는 설문지"
-        />
-        <input
-          className="block"
-          type="text"
-          name="description"
-          value={survey.description}
-          onChange={handleChange}
-          placeholder="설문지 설명"
-        />
+    <div className="flex flex-col items-center bg-white">
+      <div className="w-5/6 md:w-4/6 lg:w-1/2 min-w-min rounded-lg p-3 bg-slate-50">
+        <form onSubmit={handleSubmit}>
+          <input
+            className="block w-full"
+            type="text"
+            name="title"
+            value={survey.title}
+            onChange={handleChange}
+            placeholder="제목 없는 설문지"
+          />
+          <input
+            className="block w-full"
+            type="text"
+            name="description"
+            value={survey.description}
+            onChange={handleChange}
+            placeholder="설문지 설명"
+          />
 
-        <button>제출하기</button>
-        <button onClick={resetForm}>양식지우기</button>
-      </form>
+          <div className="flex justify-between">
+            <button>제출하기</button>
+            <button onClick={resetForm}>양식지우기</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
