@@ -1,3 +1,5 @@
+import { useAppSelector } from '../app/hooks';
+import { selectTitle } from '../redux/title/titleSlice';
 import { connect } from 'react-redux';
 import React from 'react';
 
@@ -6,7 +8,18 @@ interface TitleProps {
 }
 
 const ViewForm = ({ title }: TitleProps) => {
-  return <div className="flex flex-col items-center">ViewForm </div>;
+  const subject = useAppSelector(selectTitle);
+  console.log(subject);
+
+  return (
+    <div className="flex flex-col items-center">
+      ViewForm
+      <div className="w-5/6 md:w-4/6 lg:w-1/2 min-w-min rounded-lg p-3 bg-slate-50">
+        <h1 className="text-5xl">{subject.text}</h1>
+        <h2 className="text-xl">{subject.description}</h2>
+      </div>
+    </div>
+  );
 };
 
 const mapStateToProps = (state: { text: string; description: string }) => {
