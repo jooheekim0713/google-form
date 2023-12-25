@@ -1,6 +1,6 @@
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { update, selectTitle } from '../redux/title/titleSlice';
-import { updateTitle } from '../redux/title/action';
+import { updateTitle } from '../redux/action';
 import { connect } from 'react-redux';
 import React from 'react';
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Title from '../components/Title';
+import Question from '../components/Question';
 
 type SurveyInfo = {
   title: string | '';
@@ -38,6 +39,7 @@ export default function Form() {
       <div className="w-5/6 md:w-4/6 lg:w-1/2 min-w-min rounded-lg p-3 bg-slate-50">
         {/**<form onSubmit={handleSubmit}>*/}
         <Title />
+        <Question />
         <div className="flex justify-between">
           <button>제출하기</button>
           {/** <button onClick={resetForm}>양식지우기</button> */}
