@@ -9,7 +9,8 @@ export default function Navbar() {
     <header className=" ">
       <div className="flex text-2xl justify-around">
         <h1 className="">
-          <img src="https://www.classum.com/images/Logo-type.png" /> - survey
+          {/** <img src="https://www.classum.com/images/Logo-type.png" /> - survey
+           */}
         </h1>
         <div>
           {pathname === '/' ? (
