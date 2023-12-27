@@ -15,7 +15,7 @@ const Question = () => {
   return (
     <ol>
       {questions.map((question) => (
-        <li className="p-4 rounded-md m-2" key={question.id}>
+        <li className="p-4 m-2" key={question.id}>
           <div className="mb-2 text-xl text">
             <span className="text-red-500">
               {question.required ? '* ' : ''}
@@ -78,9 +78,9 @@ const ViewForm = ({ title }: TitleProps) => {
     <div className="flex flex-col items-center">
       미리보기 화면입니다.
       <div className="w-5/6 md:w-4/6 lg:w-1/2 min-w-min rounded-lg bg-slate-50">
-        <section className=" rounded-md m-2 p-4">
-          <h1 className="text-4xl pb-2">{subject.text}</h1>
-          <h2 className="text-xl pb-1">{subject.description}</h2>
+        <section className="rounded-md m-2 p-4">
+          <h1 className="text-4xl mb-2">{subject.text}</h1>
+          <h2 className="text-xl mb-1">{subject.description}</h2>
           <p className="text-red-500"> * 표시는 필수 질문입니다.</p>
         </section>
         <Question />
