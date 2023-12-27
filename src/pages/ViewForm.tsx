@@ -11,13 +11,15 @@ interface TitleProps {
 
 const Question = () => {
   const questions = useAppSelector(selectQuestion);
-
+  //question.required true인 경우 이벤트 추가
   return (
     <ol>
       {questions.map((question) => (
-        <li className="p-4 shadow-md rounded-md m-2" key={question.id}>
+        <li className="p-4 rounded-md m-2" key={question.id}>
           <div className="mb-2 text-xl text">
-            <span>{question.required ? '* ' : ''}</span>
+            <span className="text-red-500">
+              {question.required ? '* ' : ''}
+            </span>
             <span>{question.title}</span>
           </div>
 
@@ -37,6 +39,7 @@ const Question = () => {
                         type={question.type}
                         name={question.id.toString()}
                         id={question.id.toString()}
+                        className="mr-2"
                       />
                       <span>{answer}</span>
                     </label>
@@ -75,14 +78,15 @@ const ViewForm = ({ title }: TitleProps) => {
     <div className="flex flex-col items-center">
       미리보기 화면입니다.
       <div className="w-5/6 md:w-4/6 lg:w-1/2 min-w-min rounded-lg bg-slate-50">
-        <section>
-          <h1 className="text-5xl">{subject.text}</h1>
-          <h2 className="text-xl">{subject.description}</h2>
+        <section className=" rounded-md m-2 p-4">
+          <h1 className="text-4xl pb-2">{subject.text}</h1>
+          <h2 className="text-xl pb-1">{subject.description}</h2>
+          <p className="text-red-500"> * 표시는 필수 질문입니다.</p>
         </section>
         <Question />
         <div className="flex justify-between">
           <Button text="제출" onClick={handleSubmit} />
-          <Button text="양식 제출하기" onClick={resetForm} />
+          <Button text="양식 지우기" onClick={resetForm} />
         </div>
       </div>
     </div>
