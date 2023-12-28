@@ -4,17 +4,7 @@ import { updateTitle } from '../redux/action';
 import { connect } from 'react-redux';
 import React from 'react';
 
-interface TitleProps {
-  title?: { text: string; description: string };
-}
-
-interface updateTitleProps {
-  updateTitle: (title: object) => void;
-}
-
-type Iprops = TitleProps & updateTitleProps;
-
-const Title = ({ title, updateTitle }: Iprops) => {
+const Title = () => {
   const dispatch = useAppDispatch();
   const subject = useAppSelector(selectTitle);
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -48,15 +38,4 @@ const Title = ({ title, updateTitle }: Iprops) => {
   );
 };
 
-const mapStateToProps = (state: { text: string; description: string }) => {
-  return {
-    text: state.text,
-    description: state.description,
-  };
-};
-
-const mapDispatchToProps = {
-  updateTitle,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Title);
+export default Title;
