@@ -2,12 +2,8 @@ import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { selectTitle } from '../redux/title/titleSlice';
 import { selectQuestion } from '../redux/question/questionSlice';
 import { connect } from 'react-redux';
-import React from 'react';
 import Button from '../components/ui/Button';
-
-interface TitleProps {
-  title?: { text: string; description: string };
-}
+import React from 'react';
 
 const Question = () => {
   const questions = useAppSelector(selectQuestion);
@@ -56,7 +52,7 @@ const Question = () => {
   );
 };
 
-const ViewForm = ({ title }: TitleProps) => {
+const ViewForm = () => {
   const subject = useAppSelector(selectTitle);
 
   const handleSubmit = () => {
@@ -76,7 +72,6 @@ const ViewForm = ({ title }: TitleProps) => {
   //question.type이 'text'일 경우 길이 제한 'textarea'일경우 길게 작성할 수 있도록 만들것
   return (
     <div className="flex flex-col items-center">
-      미리보기 화면입니다.
       <div className="w-5/6 md:w-4/6 lg:w-1/2 min-w-min rounded-lg bg-slate-50">
         <section className="rounded-md m-2 p-4">
           <h1 className="text-4xl mb-2">{subject.text}</h1>
@@ -93,11 +88,4 @@ const ViewForm = ({ title }: TitleProps) => {
   );
 };
 
-const mapStateToProps = (state: { text: string; description: string }) => {
-  return {
-    text: state.text,
-    description: state.description,
-  };
-};
-
-export default connect(mapStateToProps)(ViewForm);
+export default ViewForm;

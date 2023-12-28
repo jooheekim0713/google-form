@@ -9,8 +9,6 @@ interface QuestionState {
   required: boolean;
 }
 
-interface QuestionStates extends Array<QuestionState> {}
-
 const initialState: QuestionState[] = [
   {
     id: 0,
@@ -70,10 +68,28 @@ export const questionSlice = createSlice({
         required: action.payload.required,
       };
     },
+    updateRequired: (
+      state,
+      action: PayloadAction<{
+        questions: QuestionState[];
+        id: number;
+        required: boolean;
+      }>
+    ) => {
+      action.payload.questions.map((element) => {
+        if (element.id === action.payload.id) {
+          return {
+            ...element,
+            required: !element.required,
+          };
+        }
+        return element;
+      });
+    },
   },
 });
 
-export const { update } = questionSlice.actions;
+export const { update, updateRequired } = questionSlice.actions;
 
 export const selectQuestion = (state: RootState) => state.questions;
 

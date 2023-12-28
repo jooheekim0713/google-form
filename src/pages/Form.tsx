@@ -36,14 +36,10 @@ export default function Form() {
 */
   return (
     <div className="flex flex-col items-center bg-white">
-      <div className="w-5/6 md:w-4/6 lg:w-1/2 min-w-min rounded-lg p-3 bg-slate-50">
+      <div className="w-5/6 md:w-4/6 lg:w-1/2 min-w-min rounded-lg bg-slate-50">
         {/**<form onSubmit={handleSubmit}>*/}
         <Title />
         <Question />
-        <div className="flex justify-between">
-          <button>제출하기</button>
-          {/** <button onClick={resetForm}>양식지우기</button> */}
-        </div>
         {/** </form> */}
       </div>
     </div>
