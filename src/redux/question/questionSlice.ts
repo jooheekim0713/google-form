@@ -36,7 +36,14 @@ const initialState: QuestionState[] = [
   {
     id: 3,
     title: '문항3입니다',
-    type: 'short',
+    type: 'text',
+    answers: [''],
+    required: true,
+  },
+  {
+    id: 4,
+    title: '문항4입니다',
+    type: 'textarea',
     answers: [''],
     required: true,
   },
