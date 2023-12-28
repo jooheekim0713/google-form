@@ -2,6 +2,7 @@ import { useAppSelector, useAppDispatch } from '../app/hooks';
 import {
   selectQuestion,
   updateRequired,
+  updateTitle,
 } from '../redux/question/questionSlice';
 import { IoTrashOutline } from 'react-icons/io5';
 import { BsToggle2Off, BsToggle2On } from 'react-icons/bs';
@@ -112,7 +113,18 @@ const Question = () => {
   };
   const options = useAppSelector(selectQuestion);
   //question.type selected 속성 추가
+
   //console.log(options);
+
+  const handleTitle = (e: React.FormEvent<HTMLInputElement>) => {
+    dispatch(
+      updateTitle({
+        questions: options,
+        id: parseInt(e.currentTarget.name),
+        title: e.currentTarget.value,
+      })
+    );
+  };
 
   const handleRequired = (id: number, required: boolean) => {
     dispatch(updateRequired({ questions: options, id, required }));
@@ -124,8 +136,9 @@ const Question = () => {
           <div className="flex justify-between mb-2">
             <input
               type="text"
-              name="question-title"
+              name={question.id.toString()}
               value={question.title}
+              onChange={handleTitle}
               className="block"
             />
             <select className="block" onChange={handleSelect}>

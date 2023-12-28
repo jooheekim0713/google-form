@@ -87,10 +87,29 @@ export const questionSlice = createSlice({
       });
       return updatedQuestion;
     },
+    updateTitle: (
+      state,
+      action: PayloadAction<{
+        questions: QuestionState[];
+        id: number;
+        title: string;
+      }>
+    ) => {
+      const updatedQuestion = action.payload.questions.map((element) => {
+        if (element.id === action.payload.id) {
+          return {
+            ...element,
+            title: action.payload.title,
+          };
+        }
+        return element;
+      });
+      return updatedQuestion;
+    },
   },
 });
 
-export const { update, updateRequired } = questionSlice.actions;
+export const { update, updateRequired, updateTitle } = questionSlice.actions;
 
 export const selectQuestion = (state: RootState) => state.questions;
 
