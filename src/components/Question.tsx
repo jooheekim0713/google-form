@@ -1,10 +1,12 @@
 import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { selectQuestion } from '../redux/question/questionSlice';
+import {
+  selectQuestion,
+  updateRequired,
+} from '../redux/question/questionSlice';
 import { IoTrashOutline } from 'react-icons/io5';
 import { BsToggle2Off, BsToggle2On } from 'react-icons/bs';
 import { IoMdClose } from 'react-icons/io';
 import { IoMdCopy } from 'react-icons/io';
-import { useState } from 'react';
 import React from 'react';
 
 interface AnswerProps {
@@ -103,16 +105,21 @@ const DisplayQuestions = ({ type, answers }: AnswerProps) => {
 };
 
 const Question = () => {
+  const dispatch = useAppDispatch();
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     let selected = e.target.value;
     alert('선택됐음!');
   };
-  const questions = useAppSelector(selectQuestion);
-  console.log(questions);
+  const options = useAppSelector(selectQuestion);
   //question.type selected 속성 추가
+  //console.log(options);
+
+  const handleRequired = (id: number, required: boolean) => {
+    dispatch(updateRequired({ questions: options, id, required }));
+  };
   return (
     <>
-      {questions.map((question) => (
+      {options.map((question) => (
         <section className="p-4 m-2">
           <div className="flex justify-between mb-2">
             <input
@@ -133,11 +140,15 @@ const Question = () => {
           <div className="flex text-2xl">
             <IoMdCopy className="ml-auto mr-2" />
             <IoTrashOutline className="mr-2" />
-            {question.required ? (
-              <BsToggle2Off className="mr-2" />
-            ) : (
-              <BsToggle2On className="mr-2" />
-            )}
+            <button
+              onClick={() => handleRequired(question.id, question.required)}
+            >
+              {question.required ? (
+                <BsToggle2Off className="mr-2" />
+              ) : (
+                <BsToggle2On className="mr-2" />
+              )}
+            </button>
           </div>
         </section>
       ))}

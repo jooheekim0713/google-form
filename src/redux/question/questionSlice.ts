@@ -76,7 +76,7 @@ export const questionSlice = createSlice({
         required: boolean;
       }>
     ) => {
-      action.payload.questions.map((element) => {
+      const updatedQuestion = action.payload.questions.map((element) => {
         if (element.id === action.payload.id) {
           return {
             ...element,
@@ -85,6 +85,7 @@ export const questionSlice = createSlice({
         }
         return element;
       });
+      return updatedQuestion;
     },
   },
 });
