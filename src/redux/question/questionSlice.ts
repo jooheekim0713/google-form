@@ -106,10 +106,51 @@ export const questionSlice = createSlice({
       });
       return updatedQuestion;
     },
+    removeAnswer: (
+      state,
+      action: PayloadAction<{
+        questions: QuestionState[];
+        id: number;
+        title: string;
+      }>
+    ) => {},
+    copyQuestion: (
+      state,
+      action: PayloadAction<{
+        questions: QuestionState[];
+        index: number;
+        question: QuestionState;
+      }>
+    ) => {
+      const { questions, index, question } = action.payload;
+      let questionArr = [...questions];
+      questionArr.splice(index, 0, question);
+      return questionArr;
+    },
+    deleteQuestion: (
+      state,
+      action: PayloadAction<{
+        questions: QuestionState[];
+        index: number;
+        question: QuestionState;
+      }>
+    ) => {
+      const { questions, index, question } = action.payload;
+      let questionArr = [...questions];
+      questionArr.splice(index, 1);
+      return questionArr;
+    },
   },
 });
 
-export const { update, updateRequired, updateTitle } = questionSlice.actions;
+export const {
+  update,
+  updateRequired,
+  updateTitle,
+  removeAnswer,
+  copyQuestion,
+  deleteQuestion,
+} = questionSlice.actions;
 
 export const selectQuestion = (state: RootState) => state.questions;
 

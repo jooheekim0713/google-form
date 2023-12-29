@@ -3,25 +3,44 @@ import {
   selectQuestion,
   updateRequired,
   updateTitle,
+  removeAnswer,
+  copyQuestion,
+  deleteQuestion,
 } from '../redux/question/questionSlice';
 import { IoTrashOutline } from 'react-icons/io5';
 import { BsToggle2Off, BsToggle2On } from 'react-icons/bs';
-import { IoMdClose } from 'react-icons/io';
-import { IoMdCopy } from 'react-icons/io';
+import { IoMdClose, IoMdCopy } from 'react-icons/io';
 import React from 'react';
 
+interface QuestionsProps {
+  options?: Array<{
+    id: number;
+    title: string;
+    type: string;
+    answers: string[];
+    required: boolean;
+  }>;
+}
+
 interface AnswerProps {
+  id: number;
   type: string;
   answers: string[];
 }
 
-const DisplayQuestions = ({ type, answers }: AnswerProps) => {
+type QProps = QuestionsProps & AnswerProps;
+
+const DisplayQuestions = ({ id, type, answers }: AnswerProps) => {
+  const removeAnswers = (e: React.MouseEvent<HTMLButtonElement>) => {
+    //객체를 넘겨줘야하는데 이 컴포넌트에 받은 데이터는 id, type,answers밖에 없다.
+    console.log(id, e.currentTarget.value);
+  };
   switch (type) {
     case 'dropdown':
       return (
         <ol className="list-decimal ps-4">
-          {answers.map((answer) => (
-            <li>
+          {answers.map((answer, index) => (
+            <li key={index}>
               <div className="mb-2">
                 <input
                   type="text"
@@ -30,7 +49,9 @@ const DisplayQuestions = ({ type, answers }: AnswerProps) => {
                   value={answer}
                   className="bg-inherit border-b-2 "
                 />
-                <IoMdClose className="inline text-xl" />
+                <button onClick={removeAnswers} value={index}>
+                  <IoMdClose className="inline text-xl" />
+                </button>
               </div>
             </li>
           ))}
@@ -40,7 +61,7 @@ const DisplayQuestions = ({ type, answers }: AnswerProps) => {
     case 'checkBox':
       return (
         <>
-          {answers.map((answer) => (
+          {answers.map((answer, index) => (
             <div className="mb-2">
               <input type="checkBox" name="" id="" className="mr-2" />
               <input
@@ -50,7 +71,9 @@ const DisplayQuestions = ({ type, answers }: AnswerProps) => {
                 value={answer}
                 className="bg-inherit border-b-2 "
               />
-              <IoMdClose className="inline text-xl" />
+              <button onClick={removeAnswers} value={index}>
+                <IoMdClose className="inline text-xl" />
+              </button>
             </div>
           ))}
         </>
@@ -60,7 +83,7 @@ const DisplayQuestions = ({ type, answers }: AnswerProps) => {
     case 'radio':
       return (
         <div className="my-2">
-          {answers.map((answer) => (
+          {answers.map((answer, index) => (
             <div className="mb-2">
               <input type="radio" name="" id="" className="mr-2" />
               <input
@@ -70,7 +93,9 @@ const DisplayQuestions = ({ type, answers }: AnswerProps) => {
                 value={answer}
                 className="bg-inherit border-b-2 "
               />
-              <IoMdClose className="inline text-xl" />
+              <button onClick={removeAnswers} value={index}>
+                <IoMdClose className="inline text-xl" />
+              </button>
             </div>
           ))}
         </div>
@@ -105,17 +130,25 @@ const DisplayQuestions = ({ type, answers }: AnswerProps) => {
   }
 };
 
+interface CopyOrDeleteQuestionProps {
+  id: number;
+  title: string;
+  type: string;
+  answers: string[];
+  required: boolean;
+}
+
 const Question = () => {
   const dispatch = useAppDispatch();
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     let selected = e.target.value;
     alert('선택됐음!');
   };
+
   const options = useAppSelector(selectQuestion);
   //question.type selected 속성 추가
 
-  //console.log(options);
-
+  console.log(options);
   const handleTitle = (e: React.FormEvent<HTMLInputElement>) => {
     dispatch(
       updateTitle({
@@ -126,12 +159,24 @@ const Question = () => {
     );
   };
 
+  const copyOrDeleteQuestion = (
+    question: CopyOrDeleteQuestionProps,
+    index: number,
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    if (e.currentTarget.name.includes('copy')) {
+      dispatch(copyQuestion({ questions: options, index, question }));
+    } else {
+      dispatch(deleteQuestion({ questions: options, index, question }));
+    }
+  };
   const handleRequired = (id: number, required: boolean) => {
     dispatch(updateRequired({ questions: options, id, required }));
   };
+
   return (
     <>
-      {options.map((question) => (
+      {options.map((question, index) => (
         <section className="p-4 m-2">
           <div className="flex justify-between mb-2">
             <input
@@ -149,18 +194,34 @@ const Question = () => {
               <option value="dropdown">드롭다운</option>
             </select>
           </div>
-          <DisplayQuestions type={question.type} answers={question.answers} />
+          <DisplayQuestions
+            id={question.id}
+            type={question.type}
+            answers={question.answers}
+          />
           <div className="flex text-2xl">
-            <IoMdCopy className="ml-auto mr-2" />
-            <IoTrashOutline className="mr-2" />
             <button
+              name="copy-button"
+              title="복사"
+              className="ml-auto mr-2"
+              onClick={(e) => copyOrDeleteQuestion(question, index, e)}
+            >
+              <IoMdCopy />
+            </button>
+            <button
+              name="delete-button"
+              title="삭제"
+              className="mr-2"
+              onClick={(e) => copyOrDeleteQuestion(question, index, e)}
+            >
+              <IoTrashOutline />
+            </button>
+            <button
+              className="mr-2"
+              title="필수조건 변경"
               onClick={() => handleRequired(question.id, question.required)}
             >
-              {question.required ? (
-                <BsToggle2Off className="mr-2" />
-              ) : (
-                <BsToggle2On className="mr-2" />
-              )}
+              {question.required ? <BsToggle2Off /> : <BsToggle2On />}
             </button>
           </div>
         </section>
