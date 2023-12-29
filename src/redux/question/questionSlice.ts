@@ -127,7 +127,13 @@ export const questionSlice = createSlice({
       const { questions, index, question } = action.payload;
       let questionArr = [...questions];
       questionArr.splice(index, 0, question);
-      return questionArr;
+      const updatedArr = questionArr.map((element, index) => {
+        return {
+          ...element,
+          id: index,
+        };
+      });
+      return updatedArr;
     },
     deleteQuestion: (
       state,
