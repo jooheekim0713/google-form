@@ -2,6 +2,7 @@ import { useAppSelector, useAppDispatch } from '../app/hooks';
 import {
   selectQuestion,
   updateRequired,
+  updateType,
   updateTitle,
   removeAnswer,
   copyQuestion,
@@ -140,9 +141,13 @@ interface CopyOrDeleteQuestionProps {
 
 const Question = () => {
   const dispatch = useAppDispatch();
-  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    let selected = e.target.value;
-    alert('선택됐음!');
+  const handleSelect = (
+    question: CopyOrDeleteQuestionProps,
+    index: number,
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const selected = e.target.value;
+    dispatch(updateType({ questions: options, index, type: selected }));
   };
 
   const options = useAppSelector(selectQuestion);
@@ -186,7 +191,10 @@ const Question = () => {
               onChange={handleTitle}
               className="block"
             />
-            <select className="block" onChange={handleSelect}>
+            <select
+              className="block"
+              onChange={(e) => handleSelect(question, index, e)}
+            >
               <option value="text">단답형</option>
               <option value="textarea">장문형</option>
               <option value="radio">객관식</option>

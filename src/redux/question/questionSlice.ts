@@ -51,23 +51,6 @@ export const questionSlice = createSlice({
   name: 'qustions',
   initialState,
   reducers: {
-    update: (
-      state,
-      action: PayloadAction<{
-        title: string;
-        type: string;
-        answers: string[];
-        required: boolean;
-      }>
-    ) => {
-      return {
-        ...state,
-        title: action.payload.title,
-        type: action.payload.type,
-        answers: action.payload.answers,
-        required: action.payload.required,
-      };
-    },
     updateRequired: (
       state,
       action: PayloadAction<{
@@ -100,6 +83,25 @@ export const questionSlice = createSlice({
           return {
             ...element,
             title: action.payload.title,
+          };
+        }
+        return element;
+      });
+      return updatedQuestion;
+    },
+    updateType: (
+      state,
+      action: PayloadAction<{
+        questions: QuestionState[];
+        index: number;
+        type: string;
+      }>
+    ) => {
+      const updatedQuestion = action.payload.questions.map((element) => {
+        if (element.id === action.payload.index) {
+          return {
+            ...element,
+            type: action.payload.type,
           };
         }
         return element;
@@ -144,8 +146,8 @@ export const questionSlice = createSlice({
 });
 
 export const {
-  update,
   updateRequired,
+  updateType,
   updateTitle,
   removeAnswer,
   copyQuestion,
