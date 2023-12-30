@@ -1,5 +1,5 @@
 import { useAppDispatch } from '../app/hooks';
-import { removeAnswer } from '../redux/question/questionSlice';
+import { updateAnswer, removeAnswer } from '../redux/question/questionSlice';
 import { IoMdClose, IoMdCopy } from 'react-icons/io';
 import React from 'react';
 
@@ -23,6 +23,21 @@ type QProps = QuestionsProps & AnswerProps;
 
 const DisplayQuestions = ({ options, id, type, answers }: QProps) => {
   const dispatch = useAppDispatch();
+
+  const updateAnswers = (
+    index: number,
+    e: React.FormEvent<HTMLInputElement>
+  ) => {
+    dispatch(
+      updateAnswer({
+        questions: options,
+        id,
+        answerId: index,
+        answer: e.currentTarget.value,
+      })
+    );
+  };
+
   const removeAnswers = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(
       removeAnswer({
@@ -42,6 +57,7 @@ const DisplayQuestions = ({ options, id, type, answers }: QProps) => {
                 <input
                   type="text"
                   value={answer}
+                  onChange={(e) => updateAnswers(index, e)}
                   className="bg-inherit border-b-2 "
                 />
                 <button onClick={removeAnswers} value={index}>
@@ -62,6 +78,7 @@ const DisplayQuestions = ({ options, id, type, answers }: QProps) => {
               <input
                 type="text"
                 value={answer}
+                onChange={(e) => updateAnswers(index, e)}
                 className="bg-inherit border-b-2 "
               />
               <button onClick={removeAnswers} value={index}>
@@ -82,6 +99,7 @@ const DisplayQuestions = ({ options, id, type, answers }: QProps) => {
               <input
                 type="text"
                 value={answer}
+                onChange={(e) => updateAnswers(index, e)}
                 className="bg-inherit border-b-2 "
               />
               <button onClick={removeAnswers} value={index}>

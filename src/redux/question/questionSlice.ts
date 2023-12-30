@@ -108,6 +108,30 @@ export const questionSlice = createSlice({
       });
       return updatedQuestion;
     },
+    updateAnswer: (
+      state,
+      action: PayloadAction<{
+        questions: QuestionState[];
+        id: number;
+        answerId: number;
+        answer: string;
+      }>
+    ) => {
+      const { questions, id, answerId, answer } = action.payload;
+      let questionArr = [...questions];
+      const updatedArr = questionArr.map((question) => {
+        if (question.id === id) {
+          let answerArr = [...question.answers];
+          answerArr.splice(answerId, 1, answer);
+          return {
+            ...question,
+            answers: answerArr,
+          };
+        }
+        return question;
+      });
+      return updatedArr;
+    },
     removeAnswer: (
       state,
       action: PayloadAction<{
@@ -166,6 +190,7 @@ export const {
   updateRequired,
   updateType,
   updateTitle,
+  updateAnswer,
   removeAnswer,
   copyQuestion,
   deleteQuestion,
