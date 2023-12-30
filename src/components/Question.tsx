@@ -63,9 +63,9 @@ const Question = () => {
   };
 
   return (
-    <>
+    <ol>
       {options.map((question, index) => (
-        <section className="p-4 m-2">
+        <li className="p-4 m-2" key={question.id}>
           <div className="flex justify-between mb-2">
             <input
               type="text"
@@ -115,9 +115,9 @@ const Question = () => {
               {question.required ? <BsToggle2Off /> : <BsToggle2On />}
             </button>
           </div>
-        </section>
+        </li>
       ))}
-    </>
+    </ol>
   );
 };
 

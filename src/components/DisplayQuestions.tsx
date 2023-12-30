@@ -49,9 +49,9 @@ const DisplayQuestions = ({ id, type, answers }: AnswerProps) => {
       break;
     case 'checkBox':
       return (
-        <>
+        <ol>
           {answers.map((answer, index) => (
-            <div className="mb-2">
+            <li className="mb-2" key={index}>
               <input type="checkBox" name="" id="" className="mr-2" />
               <input
                 type="text"
@@ -63,39 +63,35 @@ const DisplayQuestions = ({ id, type, answers }: AnswerProps) => {
               <button onClick={removeAnswers} value={index}>
                 <IoMdClose className="inline text-xl" />
               </button>
-            </div>
+            </li>
           ))}
-        </>
+        </ol>
       );
       break;
 
     case 'radio':
       return (
-        <div className="my-2">
+        <ol className="my-2">
           {answers.map((answer, index) => (
-            <div className="mb-2">
+            <li className="mb-2" key={index}>
               <input type="radio" name="" id="" className="mr-2" />
               <input
                 type="text"
-                name=""
-                id=""
                 value={answer}
                 className="bg-inherit border-b-2 "
               />
               <button onClick={removeAnswers} value={index}>
                 <IoMdClose className="inline text-xl" />
               </button>
-            </div>
+            </li>
           ))}
-        </div>
+        </ol>
       );
       break;
     case 'textarea':
       return (
         <input
           type="text"
-          name=""
-          id=""
           value={answers.toString()}
           placeholder="장문형 텍스트"
           className="w-full border-b-2 border-dotted bg-inherit my-2"
@@ -114,7 +110,9 @@ const DisplayQuestions = ({ id, type, answers }: AnswerProps) => {
       break;
 
     default:
-      return <p>wrong question type!</p>;
+      throw new Error(
+        `지원되지 않는 타입의 설문입니다. 입력된 설문 타입 : ${type}`
+      );
       break;
   }
 };
