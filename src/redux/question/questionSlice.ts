@@ -113,9 +113,20 @@ export const questionSlice = createSlice({
       action: PayloadAction<{
         questions: QuestionState[];
         id: number;
-        title: string;
+        answerId: number;
       }>
-    ) => {},
+    ) => {
+      const { questions, id, answerId } = action.payload;
+      let questionsArr = questions.map((question) => {
+        if (question.id === id) {
+          let answerArr = [...question.answers];
+          const updatedAnswers = answerArr.splice(answerId, 1);
+          return { ...question, answers: answerArr };
+        }
+        return question;
+      });
+      return questionsArr;
+    },
     copyQuestion: (
       state,
       action: PayloadAction<{

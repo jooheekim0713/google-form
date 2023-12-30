@@ -1,8 +1,10 @@
+import { useAppDispatch } from '../app/hooks';
+import { removeAnswer } from '../redux/question/questionSlice';
 import { IoMdClose, IoMdCopy } from 'react-icons/io';
 import React from 'react';
 
 interface QuestionsProps {
-  options?: Array<{
+  options: Array<{
     id: number;
     title: string;
     type: string;
@@ -19,10 +21,16 @@ interface AnswerProps {
 
 type QProps = QuestionsProps & AnswerProps;
 
-const DisplayQuestions = ({ id, type, answers }: AnswerProps) => {
+const DisplayQuestions = ({ options, id, type, answers }: QProps) => {
+  const dispatch = useAppDispatch();
   const removeAnswers = (e: React.MouseEvent<HTMLButtonElement>) => {
-    //객체를 넘겨줘야하는데 이 컴포넌트에 받은 데이터는 id, type,answers밖에 없다.
-    console.log(id, e.currentTarget.value);
+    dispatch(
+      removeAnswer({
+        questions: options,
+        id,
+        answerId: parseInt(e.currentTarget.value),
+      })
+    );
   };
   switch (type) {
     case 'dropdown':
@@ -33,8 +41,6 @@ const DisplayQuestions = ({ id, type, answers }: AnswerProps) => {
               <div className="mb-2">
                 <input
                   type="text"
-                  name=""
-                  id=""
                   value={answer}
                   className="bg-inherit border-b-2 "
                 />
@@ -55,8 +61,6 @@ const DisplayQuestions = ({ id, type, answers }: AnswerProps) => {
               <input type="checkBox" name="" id="" className="mr-2" />
               <input
                 type="text"
-                name=""
-                id=""
                 value={answer}
                 className="bg-inherit border-b-2 "
               />
@@ -92,7 +96,7 @@ const DisplayQuestions = ({ id, type, answers }: AnswerProps) => {
       return (
         <input
           type="text"
-          value={answers.toString()}
+          disabled
           placeholder="장문형 텍스트"
           className="w-full border-b-2 border-dotted bg-inherit my-2"
         />
@@ -102,7 +106,7 @@ const DisplayQuestions = ({ id, type, answers }: AnswerProps) => {
       return (
         <input
           type="text"
-          value={answers.toString()}
+          disabled
           placeholder="단답형 텍스트"
           className="border-b-2 border-dotted bg-inherit my-2"
         />

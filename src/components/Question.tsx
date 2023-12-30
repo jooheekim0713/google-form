@@ -36,7 +36,7 @@ const Question = () => {
   const options = useAppSelector(selectQuestion);
   //question.type selected 속성 추가
 
-  console.log(options);
+  //console.log(options);
   const handleTitle = (e: React.FormEvent<HTMLInputElement>) => {
     dispatch(
       updateTitle({
@@ -86,6 +86,7 @@ const Question = () => {
             </select>
           </div>
           <DisplayQuestions
+            options={options}
             id={question.id}
             type={question.type}
             answers={question.answers}
