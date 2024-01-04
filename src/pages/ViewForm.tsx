@@ -1,7 +1,6 @@
-import { useAppSelector, useAppDispatch } from '../app/hooks';
+import { useAppSelector } from '../app/hooks';
 import { selectTitle } from '../redux/title/titleSlice';
 import { selectQuestion } from '../redux/question/questionSlice';
-import { connect } from 'react-redux';
 import Button from '../components/ui/Button';
 import React from 'react';
 

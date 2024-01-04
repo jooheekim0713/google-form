@@ -4,7 +4,6 @@ import {
   updateRequired,
   updateType,
   updateTitle,
-  removeAnswer,
   copyQuestion,
   deleteQuestion,
 } from '../redux/question/questionSlice';
@@ -12,6 +11,7 @@ import { IoTrashOutline } from 'react-icons/io5';
 import { BsToggle2Off, BsToggle2On } from 'react-icons/bs';
 import { IoMdCopy } from 'react-icons/io';
 import DisplayQuestions from './DisplayQuestions';
+import { PiDotsSixBold } from 'react-icons/pi';
 import React from 'react';
 
 interface CopyOrDeleteQuestionProps {
@@ -36,7 +36,6 @@ const Question = () => {
   const options = useAppSelector(selectQuestion);
   //question.type selected 속성 추가
 
-  //console.log(options);
   const handleTitle = (e: React.FormEvent<HTMLInputElement>) => {
     dispatch(
       updateTitle({
@@ -65,7 +64,13 @@ const Question = () => {
   return (
     <ol>
       {options.map((question, index) => (
-        <li className="p-4 m-2" key={question.id}>
+        <li
+          className="group p-4 hover:pt-1 m-2 border-2 rounded-lg active:shadow-lg"
+          key={question.id}
+        >
+          <div className="hidden group-hover:block">
+            <PiDotsSixBold className="mx-auto" />
+          </div>
           <div className="flex justify-between mb-2">
             <input
               type="text"

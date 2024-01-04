@@ -1,6 +1,6 @@
 import { useAppDispatch } from '../app/hooks';
 import { updateAnswer, removeAnswer } from '../redux/question/questionSlice';
-import { IoMdClose, IoMdCopy } from 'react-icons/io';
+import { IoMdClose } from 'react-icons/io';
 import React from 'react';
 
 interface QuestionsProps {
@@ -68,7 +68,6 @@ const DisplayQuestions = ({ options, id, type, answers }: QProps) => {
           ))}
         </ol>
       );
-      break;
     case 'checkBox':
       return (
         <ol>
@@ -88,8 +87,6 @@ const DisplayQuestions = ({ options, id, type, answers }: QProps) => {
           ))}
         </ol>
       );
-      break;
-
     case 'radio':
       return (
         <ol className="my-2">
@@ -109,7 +106,6 @@ const DisplayQuestions = ({ options, id, type, answers }: QProps) => {
           ))}
         </ol>
       );
-      break;
     case 'textarea':
       return (
         <input
@@ -119,7 +115,6 @@ const DisplayQuestions = ({ options, id, type, answers }: QProps) => {
           className="w-full border-b-2 border-dotted bg-inherit my-2"
         />
       );
-      break;
     case 'text':
       return (
         <input
@@ -129,13 +124,10 @@ const DisplayQuestions = ({ options, id, type, answers }: QProps) => {
           className="border-b-2 border-dotted bg-inherit my-2"
         />
       );
-      break;
-
     default:
       throw new Error(
         `지원되지 않는 타입의 설문입니다. 입력된 설문 타입 : ${type}`
       );
-      break;
   }
 };
 
